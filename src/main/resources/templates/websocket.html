@@ -7,33 +7,52 @@
     <script th:src="@{/js/axios.min.js}"></script>
     <script th:src="@{/js/jquery.min.js}"></script>
     <script th:src="@{/js/vue.js}"></script>
-    <script type="text/javascript">
-        var websocket = null;
-        $(function(){
-            if("websocket" in window){
-                websocket = new WebSocket("ws://localhost:8080/handler?name=tangqiu");
-                console.log("websocket");
-            }else{
-                console.log("浏览器不支持websocket");
-            }
-            websocket.onopen=function(){
-                console.log("websocket连接了");
-                websocket.send("websocket");
-            }
-            websocket.onerror=function(){
-                console.log("websocket连接失败");
-            }
-            websocket.onmessage=function () {
-                console.log("收到websocket消息");
-            }
-            websocket.onclose=function(){
-                console.log("websocket关闭了");
-            }
-
-        })
-    </script>
 </head>
 <body>
 <div>WebSocket</div>
+<div id="app">
+    <button @click="close">关闭websocket</button><br>
+    <button @click="sendMsg">发送消息</button><input  v-model="msg" type="text" /><br>
+</div>
 </body>
+<script type="text/javascript">
+    var websocket = null;
+    $(function(){
+        if("websocket" in window){
+            websocket = new WebSocket("ws://localhost:8080/handler?name=tangqiu");
+            console.log("websocket");
+        }else{
+            console.log("浏览器不支持websocket");
+        }
+        websocket.onopen=function(){
+            console.log("websocket连接了");
+            websocket.send("websocket");
+        }
+        websocket.onerror=function(){
+            console.log("websocket连接失败");
+        }
+        websocket.onmessage=function () {
+            console.log("收到websocket消息");
+        }
+        websocket.onclose=function(){
+            console.log("websocket关闭了");
+        }
+
+    })
+    var vm = new Vue({
+        el:'#app',
+        data:{
+            msg:'',
+        },
+        methods:{
+            close:function () {
+                websocket.close();
+            },
+            sendMsg:function(){
+               websocket.send(this.msg);
+               console.log("发送消息了")
+            }
+        }
+    })
+</script>
 </html>

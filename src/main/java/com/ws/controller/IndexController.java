@@ -5,8 +5,12 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 @Controller
 public class IndexController {
-    @RequestMapping("/index")
+    @RequestMapping("/websocket")
     public String index(){
         return "websocket";
+    }
+    @RequestMapping("/index")
+    public String showIndex(){
+        return "index";
     }
 }

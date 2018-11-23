@@ -23,6 +23,7 @@ public class WsHandelr extends TextWebSocketHandler {
         System.out.println(message.getPayload());
         System.out.println(message.getPayloadLength());
         System.out.println(message.isLast());
+
     }
 
     @Override
@@ -43,6 +44,7 @@ public class WsHandelr extends TextWebSocketHandler {
     @Override
     public void afterConnectionClosed(WebSocketSession session, CloseStatus status) throws Exception {
         super.afterConnectionClosed(session, status);
+        System.out.println("closed");
     }
 
     @Override
