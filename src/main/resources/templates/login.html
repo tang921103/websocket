@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script th:src="@{/js/axios.min.js}"></script>
+    <script th:src="@{/js/jquery.min.js}"></script>
+    <script th:src="@{/js/vue.js}"></script>
+</head>
+<body>
+    <div id="login">
+        姓名：<input type="text" v-model="username"><br>
+        密码：<input type="text" v-model="password"><br>
+        <input type="button" @click="login" value="commit"><br>
+    </div>
+</body>
+<script type="text/javascript">
+    var v = new Vue({
+        el:'#login',
+        data:{
+            username:'',
+            password:'',
+        },
+        methods:{
+            login:function(){
+                var params = new URLSearchParams();
+                params.append("username",this.username);
+                params.append("password",this.password);
+                axios.get("http://localhost:8080/ws/login",params).then(function(response){
+                    if(response.status==200){
+                        console.log(response);
+                        location.href="success";
+                    }
+                }).catch(function (reason) {
+                    console.log(reason);
+                })
+            }
+        }
+    })
+</script>
+</html>

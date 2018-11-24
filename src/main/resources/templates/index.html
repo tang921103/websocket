@@ -1,8 +1,8 @@
 <!DOCTYPE html>
-<html lang="en">
-<html xmlns:th="http://www.thymeleaf.org">
-<head>
-    <meta charset="UTF-8">
+    <html lang="en">
+    <html xmlns:th="http://www.thymeleaf.org">
+    <head>
+        <meta charset="UTF-8">
     <title>首页</title>
     <script th:src="@{/js/axios.min.js}"></script>
     <script th:src="@{/js/jquery.min.js}"></script>
@@ -16,7 +16,7 @@
     <hr>
     <input type="button" value="close websocket" @click="closeWS"/><br>
     <hr>
-    <span id="m">aa{{messageFromWebSocket}}</span>
+    <span id="m">{{messageFromWebSocket}}</span>
 </div>
 </body>
 <script type="text/javascript">
@@ -30,7 +30,7 @@
         methods:{
             openWS:function () {
                 if("WebSocket" in window){
-                    webSocket = new WebSocket("ws://localhost:8080/web?name=tangqiu");
+                    webSocket = new WebSocket("ws://localhost:8080/ws/web?name=tangqiu&age=25");
                     console.log("建立连接了");
                 }else{
                     alert("此浏览器不支持websocket");

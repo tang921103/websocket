@@ -8,7 +8,7 @@ import java.io.IOException;
 import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.CopyOnWriteArraySet;
-
+//注册为websocket服务器
 @ServerEndpoint("/web")
 @Component
 public class MyWebSocket {
@@ -23,7 +23,7 @@ public class MyWebSocket {
         copyOnWriteArraySet.add(this);
         this.count=copyOnWriteArraySet.size();
         System.out.println("上线了，当前在线人数："+this.count);
-        System.out.println(session.getRequestParameterMap());
+        System.out.println("参数："+session.getRequestParameterMap());
     }
     @OnMessage
     public void onMessage(Session session,String message) throws IOException {
