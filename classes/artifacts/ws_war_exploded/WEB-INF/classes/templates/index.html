@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+    <html lang="en">
+    <html xmlns:th="http://www.thymeleaf.org">
+    <head>
+        <meta charset="UTF-8">
+    <title>首页</title>
+    <script th:src="@{/js/axios.min.js}"></script>
+    <script th:src="@{/js/jquery.min.js}"></script>
+    <script th:src="@{/js/vue.js}"></script>
+</head>
+<body>
+<div id="ws">
+    <input type="button" value="open websocket" @click="openWS"/><br>
+    <hr>
+    <input type="button" value="sendMessage" @click="sendWS"/><input type="text" v-model="message"><br>
+    <hr>
+    <input type="button" value="close websocket" @click="closeWS"/><br>
+    <hr>
+    <span id="m">{{messageFromWebSocket}}</span>
+</div>
+</body>
+<script type="text/javascript">
+    var webSocket=null;
+    var vue = new Vue({
+        el:'#ws',
+        data:{
+            message:'',
+            messageFromWebSocket:'',
+        },
+        methods:{
+            openWS:function () {
+                if("WebSocket" in window){
+                    webSocket = new WebSocket("ws://localhost:8080/ws/web?name=tangqiu&age=25");
+                    console.log("建立连接了");
+                }else{
+                    alert("此浏览器不支持websocket");
+                }
+            },
+            sendWS:function () {
+                webSocket.send(this.message);
+            },
+            closeWS:function () {
+                webSocket.close();
+            },
+        },
+        //页面加载完后调用
+        mounted:function(){
+            this.openWS();
+            webSocket.onopen=function () {
+                console.log("open websocket");
+            }
+            webSocket.onmessage=function (event) {
+                console.log(event);
+                console.log(event.data);
+                //this.messageFromWebSocket=event.data;
+                document.getElementById("m").innerText=event.data;
+                console.log(this.messageFromWebSocket);
+                console.log("收到来自ws的消息");
+            }
+            webSocket.onerror=function(){
+                console.log("连接出错");
+            }
+            webSocket.onclose=function(){
+                console.log("连接关闭");
+            }
+            onbeforeunload=function (ev) {
+                webSocket.close();
+            }
+        }
+    })
+</script>
+</html>

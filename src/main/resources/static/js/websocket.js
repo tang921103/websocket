@@ -1,7 +1,7 @@
 $(function(){
     var websocket = null;
     if("WebSocket" in window){
-        websocket = new WebSocket("ws://localhost:8080/ws/web");
+        websocket = new WebSocket("ws://localhost:8080/web?user_id="+sessionStorage.getItem("user_id"));
         console.log("创建websocket");
         websocket.onopen=function (ev) {
             console.log("open");

@@ -90,6 +90,12 @@
                 <artifactId>spring-boot-maven-plugin</artifactId>
             </plugin>
         </plugins>
+        <resources>
+            <resource>
+                <directory>src/main/java</directory>
+                <includes>*.xml</includes>
+            </resource>
+        </resources>
     </build>
 
 

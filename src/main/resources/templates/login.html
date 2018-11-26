@@ -27,10 +27,15 @@
                 var params = new URLSearchParams();
                 params.append("username",this.username);
                 params.append("password",this.password);
-                axios.get("http://localhost:8080/ws/login",params).then(function(response){
+                axios.post("http://localhost:8080/login",params).then(function(response){
                     if(response.status==200){
                         console.log(response);
-                        location.href="success";
+                        if(response.data.code==0){
+                            sessionStorage.setItem("user_id",response.data.data.id);
+                            location.href="success";
+                        }else{
+                            console.log("error");
+                        }
                     }
                 }).catch(function (reason) {
                     console.log(reason);
